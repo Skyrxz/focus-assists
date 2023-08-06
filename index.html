@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>Calm Focus</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./font-awesome/./all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk&display=swap" rel="stylesheet">
+    <script src="./compose.js"></script>
+    <script src="./twix.js"></script>
+    <link rel="shortcut icon" href="./logo.png" type="image/x-icon">
+    <script src="index.js" type="module" defer></script>
+    <script src="progressBar.js" type="module" defer></script>
+    <link rel="stylesheet" href="./progress-bar.css">
+</head>
+<body class="bg-sky-500 w-full flex flex-col place-items-center">
+    <div id="modals" class="hidden modals fixed backdrop-brightness-50 z-50 w-screen overflow-hidden h-screen flex place-content-center place-items-center">
+        <div id="reports-modal" class="hidden">
+            <div>
+                <div class="text-white text-2xl flex place-content-between place-items-center">
+                    <span>Report Summary</span>
+                    <button id="reports-modal-close-btn"><i class="fa-solid fa-circle-xmark"></i></button>
+                </div>
+                <div class="flex gap-5 place-content-center w-full mt-6 flex-wrap shrink-0">
+                    <div class="summary-block">
+                        <div class="flex place-items-center place-content-between">
+                            <i class="fa-solid fa-hourglass text-4xl"></i>
+                            <span class="text-2xl" id="completed-time-daily">- -</span>
+                        </div>
+                        <div class="text-right">daily hours focused</div>
+                    </div>
+                    <div class="summary-block">
+                        <div class="flex place-items-center place-content-between">
+                            <i class="fa-solid fa-clock text-4xl"></i>
+                            <span class="text-2xl" id="completed-time-weekly">- -</span>
+                        </div>
+                        <div class="text-right">weekly hours focused</div>
+                    </div>
+                    <div class="summary-block">
+                        <div class="flex place-items-center place-content-between">
+                            <i class="fa-solid fa-calendar text-4xl"></i>
+                            <span class="text-2xl" id="completed-time-monthly">- -</span>
+                        </div>
+                        <div class="text-right">monthly hours focused</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex place-content-between text-white my-8 p-2 border-y border-slate-700">
+                <span>TOTAL</span>
+                <span id="total-completed-time">- -</span>
+            </div>
+        </div>
+        <div id="settings-modal" class="hidden">
+            <div class="text-white">
+                <div class="text-2xl flex place-content-between place-items-center">
+                    <span>Settings</span>
+                    <button id="settings-modal-close-btn"><i class="fa-solid fa-circle-xmark"></i></button>
+                </div>
+                <div class="flex flex-col mt-6 w-full px-10 max-sm:px-0">
+                    <div class="settings-item">
+                        <div class="flex flex-col w-1/2">
+                            <span><i class="fa-solid fa-bell mr-2"></i>Notifications</span>
+                            <span class="setting-description">Enabling this will disable notifications. You will not be notified when the session ends.</span>
+                        </div>
+                        <div><input type="range" class="toggle" id="notification-status" min="0" max="1" value="1"></div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="flex flex-col w-1/2">
+                            <span><i class="fa-solid fa-volume-up mr-2"></i>Sound</span>
+                            <span class="setting-description">This will disable alarms if disabled.</span>
+                        </div>
+                        <div><input type="range" class="toggle" id="sound-status" min="0" max="1" value="1"></div>
+                    </div>
+                    <div class="settings-item">
+                        <div class="flex flex-col w-1/2">
+                            <span><i class="fa-solid fa-yin-yang mr-2"></i>Longer Breaks</span>
+                            <span class="setting-description">Enabling this setting will make breaks fifteens minute long.</span>
+                        </div>
+                        <div><input type="range" class="toggle" id="break-type" min="0" max="1" value="0"></div>
+                    </div>
+                    <!-- <div class="settings-item">
+                        <div class="flex flex-col w-1/2">
+                            <span><i class="fa-solid fa-lightbulb mr-2"></i>Light Mode</span>
+                            <span class="text-sm text-slate-400">Enabling this activate light mode.</span>
+                        </div>
+                        <div><input type="range" class="toggle" id="light-mode-status" min="0" max="1" value="0"></div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <main id="main" class="w-full flex place-items-center h-full">
+        <div class="m-10 max-md:m-5 max-sm:m-2 max-md:mt-10 mt-10 h-full flex w-full flex-col items-center shrink">
+            <header class="w-1/2 max-xl:w-2/3 max-md:w-full flex place-content-between place-items-center py-5">
+                <span class="flex place-items-center text-3xl text-white">
+                    <img src="./logo.png" class="h-7 mr-2">
+                    Calm Focus
+                </span>
+                <div class="header-buttons">
+                    <button id="reports-btn"><i class="fa-solid fa-bar-chart max-sm:mr-0 max-sm:p-2"></i><span class="max-sm:hidden">Reports</span></button>
+                    <button id="settings-btn"><i class="fa-solid fa-gear max-sm:mr-0 max-sm:p-2"></i><span class="max-sm:hidden">Settings</span></button>
+                </div>
+            </header>
+            <div class="w-1/2 max-xl:w-2/3 max-md:w-full h-1 rounded-lg bg-white my-2"></div>
+            <div class="w-1/2 max-xl:w-2/3 max-sm:grow max-md:w-full mb-2 max-md:justify-start bg-black bg-opacity-30 p-14 rounded-lg flex flex-col place-content-center place-items-center text-white">
+                <button id="open-in-window" class="text-right w-full"><i class="fa-solid fa-arrow-up-right-from-square"></i></button>
+                <div class="box hidden" id="timer-container">
+                    <div id="timer-circle" class="circle" data-dots="30" data-percent="100" style="--bgColor: white;--\~bgColor: rgb(61, 61, 61);"></div>
+                    <div class="text">
+                        <h2>
+                            <span id="timer" class="font-bold">00:00:00</span>
+                        </h2>
+                    </div>
+                </div>
+                <div id="status" class="text-center my-2 hidden">Up Next in <span id="status-time">4 mins</span>:<br><span id="next-status">Break</span></div>
+                <div id="info" class="flex flex-col">
+                    <span class="text-4xl text-center max-md:text-2xl">Get ready to focus</span>
+                    <span class="text-center">We'll send a notification and play an alarm when it's time to stop. We'll also play a ding sound it's time for a break.</span>
+                </div>
+                <div id="input-container">
+                    <label>
+                        <input class="time-input" type="number" id="hours-input" data-input="yes">
+                    </label>
+                    <label>
+                        <input class="time-input" type="number" id="minutes-input" data-input="yes">
+                    </label>
+                </div>
+                <div class="buttons">
+                    <button id="stop"><i class="fa-solid fa-circle-stop"></i>Stop</button>
+                    <button id="start"><i class="fa-solid fa-circle-play"></i>Start</button>
+                    <button id="pause"><i class="fa-solid fa-circle-pause"></i>Pause</button>
+                </div>
+            </div>
+            <!-- <div>
+                <span>Your Stats</span>
+                <div>
+                    <div>
+                        <span id="completed-time-daily" class="completed-time">1h 1m</span>
+                    </div>
+                    <div><div id="c-bar"></div></div>
+                    <span>Daily</span>
+                </div>
+                <div>
+                    <div>
+                        <span id="completed-time-weekly" class="completed-time">1h 1m</span>
+                    </div>
+                    <div><div id="c-bar"></div></div>
+                    <span>Weekly</span>
+                </div>
+                <div>
+                    <div>
+                        <span id="completed-time-monthly" class="completed-time">1h 1m</span>
+                    </div>
+                    <div><div id="c-bar"></div></div>
+                    <span>Monthly</span>
+                </div>
+            </div> -->
+        </div>
+    </main>    
+</body>
+</html>

@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+body {
+    background: url("./background.jpg");
+    background-position: center;
+    background-size: cover;
+    backdrop-filter: blur(3px) brightness(0.5);
+    @apply h-screen
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+* {
+    color: inherit;
+    font-family: 'Franklin Gothic', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.empty-bar {
+    @apply w-full h-px bg-sky-500 my-2 flex place-items-center
+}
+
+.loading-bar {
+    @apply w-5/6 h-1 bg-white rounded -my-px outline outline-sky-400
+}
+
+#input-container {
+    @apply text-8xl max-sm:text-7xl mt-10 mb-20 max-md:mb-10 flex place-content-center place-items-center gap-10
+}
+
+.time-input {
+    @apply bg-transparent w-28 max-sm:w-24 text-center border-b-4 border-white
+}
+
+.time-input:focus {
+    @apply outline-none
+}
+
+.buttons {
+    @apply flex flex-nowrap gap-10 mt-5;
+}
+
+.header-buttons {
+    @apply flex flex-nowrap gap-2;
+}
+
+.buttons > button {
+    @apply px-5 py-2 bg-white text-black rounded text-lg flex flex-nowrap place-items-center place-content-center
+}
+
+.header-buttons > button {
+    @apply p-2 bg-black bg-opacity-30 text-white rounded text-lg flex flex-nowrap place-items-center place-content-center
+}
+
+button > i {
+    @apply mr-2
+}
+
+
+#stop {
+    @apply text-white hidden;
+    background: red;
+}
+
+#pause {
+    @apply hidden
+}
+
+#reports-modal {
+    @apply rounded-md p-4 bg-black shadow-lg w-2/4 max-xl:w-full mx-2 -translate-y-7 opacity-0;
+}
+
+#settings-modal {
+    @apply rounded-md p-4 bg-black shadow-lg w-2/4 max-xl:w-full mx-2 -translate-y-7 opacity-0;
+}
+
+.summary-block {
+    @apply h-28 bg-white w-60 rounded-xl p-4 flex flex-col place-content-between
+}
+
+.settings-item {
+    @apply flex place-items-start place-content-between w-full border-t border-slate-700 p-4;
+}
+
+.setting-description {
+    @apply text-sm text-slate-400 max-sm:hidden;
+}
+
+button > * { pointer-events: none; }
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .toggle {
+      /* overflow: hidden; */
+      width: 50px;
+      -webkit-appearance: none;
+      background-color: transparent;
+      border: solid 1px rgb(51 65 85);
+      border-radius: 3em;
+      padding: .15em;
+    }
+    
+    .toggle::-webkit-slider-runnable-track {
+      height: 30px;
+      -webkit-appearance: none;
+    }
+
+    .toggle::-webkit-slider-thumb {
+        background: white;
+        width: 30px;
+        -webkit-appearance: none;
+        border-radius: 100%;
+        height: 30px;
+    }
+
+    .toggled::-webkit-slider-thumb{
+        @apply bg-sky-500
+    }
+}
