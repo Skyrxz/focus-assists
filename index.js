@@ -40,7 +40,6 @@ const infoEl = document.getElementById('info');
 const breakTypeEl = document.getElementById('break-type');
 const notificationStatusEl = document.getElementById('notification-status');
 const soundStatusEl = document.getElementById('sound-status');
-const spotifyEl = document.getElementById('spotify');
 const openInWindowEl = document.getElementById('open-in-window');
 const timerCircleEl = document.getElementById('timer-circle');
 const timerContainerEl = document.getElementById('timer-container');
@@ -49,7 +48,6 @@ const completedTimeDailyEl = document.getElementById('completed-time-daily');
 const completedTimeWeeklyEl = document.getElementById('completed-time-weekly');
 const completedTimeMonthlyEl = document.getElementById('completed-time-monthly');
 const totalCompletedTimeEl = document.getElementById('total-completed-time');
-const statusTimeEl = document.getElementById('status-time');
 const nextStatusEl = document.getElementById('next-status');
 const toggleEls = Array.from(document.querySelectorAll('.toggle'))
 
@@ -120,7 +118,6 @@ reportsBtnEl.addEventListener('click', showReportModal)
 settingsBtnEl.addEventListener('click', showSettingsModal)
 reportsModalCloseBtnEl.addEventListener('click', hideReportModal)
 settingsModalCloseBtnEl.addEventListener('click', hideSettingsModal)
-modalsEl.addEventListener('click', () => {hideReportModal(); hideSettingsModal()})
 openInWindowEl.addEventListener('click', openInWindow)
 
 function showModal(modalEl) {
@@ -267,7 +264,7 @@ function updateIntervalTime() {
     onGoingStyling();
     const updatedTime = Twix.seperateSecondsToTime(updatableIntervalSeconds, true);
     updatableIntervalSeconds--;
-    nextStatusEl.innerText = 'Break'
+    nextStatusEl.innerText = 'Focus Session'
     if (updatableIntervalSeconds < 1) {
         if (completeIntervals > 1) {
             playDing();
@@ -314,9 +311,9 @@ function updateSettings() {
     allowSound = JSON.parse(localStorage.getItem('sound-status')) !== false;
 
     if (longBreak) {
-        breakTypeEl.value = '2';
-    } else {
         breakTypeEl.value = '1';
+    } else {
+        breakTypeEl.value = '0';
     }
 
     if (allowNotifications) {
@@ -337,7 +334,7 @@ function updateSettings() {
 function updateBreakTime() {
     const updatedTime = Twix.seperateSecondsToTime(updatableBreakIntervalSeconds, true);
     updatableBreakIntervalSeconds--;
-    nextStatusEl.innerText = 'Focus Session';
+    nextStatusEl.innerText = 'Break';
     if (updatableBreakIntervalSeconds === 0) {
         playDing();
         breakActive = false;
@@ -357,7 +354,6 @@ function updateTime() {
     if (!breakActive && completeIntervals >= 1) {
         updateTimerBar(completeIntervalSeconds, updatableIntervalSeconds);
         const { hours, minutes, seconds } = updateIntervalTime();
-        if (amountOfBreaks > 1){updateStatus(hours, minutes);}
         timerEl.innerHTML = `${hours}:${minutes}:${seconds}`;
         completedSecondsDaily++
         completedSecondsWeekly++
@@ -370,7 +366,6 @@ function updateTime() {
     } else {
         updateTimerBar(breakSeconds, updatableBreakIntervalSeconds);
         const { hours, minutes, seconds } = updateBreakTime();
-        updateStatus(hours, minutes);
         timerEl.innerHTML = `${hours}:${minutes}:${seconds}`;
     }
 }
